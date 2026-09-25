@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>ch.heigvd.amt</groupId>
+        <artifactId>amt-exemples</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>2-advanced-java-features</artifactId>
+    <name>Fonctionnalités avancées de Java</name>
+    <description>
+        Les cinq mécanismes du deck 2, chacun sur son propre exemple : classloaders,
+        reflection, annotations à l'exécution, proxies, annotations à la compilation.
+    </description>
+
+    <properties>
+        <plugin.classes>${project.build.directory}/plugin-classes</plugin.classes>
+    </properties>
+
+    <dependencies>
+        <!-- @Describe et @Hidden, que Config déclare ; DescriberProcessor les traite à la compilation. -->
+        <dependency>
+            <groupId>ch.heigvd.amt</groupId>
+            <artifactId>2-advanced-java-features-processor</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>ch.heigvd.amt</groupId>
+                            <artifactId>2-advanced-java-features-processor</artifactId>
+                            <version>${project.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+                <executions>
+                    <!-- Le plugin d'export se compile à part, après les classes principales dont il
+                         dépend (Exporter) : ses classes ne doivent pas rejoindre target/classes,
+                         sinon PluginIT le verrait sans passer par le JAR. -->
+                    <execution>
+                        <id>plugin-compile</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <compileSourceRoots>
+                                <compileSourceRoot>${project.basedir}/src/plugin/java</compileSourceRoot>
+                            </compileSourceRoots>
+                            <outputDirectory>${plugin.classes}</outputDirectory>
+                            <proc>none</proc>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>plugin-resources</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${plugin.classes}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/src/plugin/resources</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>plugin-jar</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <classesDirectory>${plugin.classes}</classesDirectory>
+                            <classifier>plugin</classifier>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Un test d'intégration, parce qu'il lui faut le JAR du plugin. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <configuration>
+                    <systemPropertyVariables>
+                        <plugin.jar>${project.build.directory}/${project.build.finalName}-plugin.jar</plugin.jar>
+                    </systemPropertyVariables>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
