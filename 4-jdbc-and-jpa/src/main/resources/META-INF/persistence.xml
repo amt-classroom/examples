@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_1.xsd"
+             version="3.1">
+
+    <!-- Une unité par mapping : deux classes Stage ne peuvent pas cohabiter dans la même.
+         La connexion n'est pas ici : les tests passent leur DataSource à la création. -->
+
+    <!-- La billetterie : concerts, scènes et stock de billets. -->
+    <persistence-unit name="ticketing" transaction-type="RESOURCE_LOCAL">
+        <class>ch.heigvd.amt.jpa.Concert</class>
+        <class>ch.heigvd.amt.jpa.Stage</class>
+        <class>ch.heigvd.amt.jpa.TicketStock</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <property name="hibernate.show_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+
+    <!-- Une relation laissée aux défauts : seul son schéma compte. -->
+    <persistence-unit name="defaults" transaction-type="RESOURCE_LOCAL">
+        <class>ch.heigvd.amt.defaults.Concert</class>
+        <class>ch.heigvd.amt.defaults.Stage</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    </persistence-unit>
+
+    <!-- FetchType.EAGER sur le mapping. -->
+    <persistence-unit name="eager" transaction-type="RESOURCE_LOCAL">
+        <class>ch.heigvd.amt.eager.Concert</class>
+        <class>ch.heigvd.amt.eager.Stage</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <property name="hibernate.show_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>

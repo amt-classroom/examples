@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>ch.heigvd.amt</groupId>
+        <artifactId>amt-exemples</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>5-transactions-and-validation</artifactId>
+    <name>Transactions et validation</name>
+    <description>
+        Des exemples exécutables sur une vraie base PostgreSQL : transactions, isolation, verrous,
+        délais et interblocages, transactions distribuées, Jakarta Validation et écritures en
+        masse. En JDBC sans framework, et dans une application Helidon MP.
+    </description>
+
+    <dependencies>
+        <!-- Le serveur, CDI, Jakarta REST et MicroProfile Config. -->
+        <dependency>
+            <groupId>io.helidon.microprofile.bundles</groupId>
+            <artifactId>helidon-microprofile-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.transaction</groupId>
+            <artifactId>jakarta.transaction-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+        </dependency>
+
+        <!-- JPA et JTA dans Helidon : Hibernate, Narayana, le pool HikariCP. -->
+        <dependency>
+            <groupId>io.helidon.integrations.cdi</groupId>
+            <artifactId>helidon-integrations-cdi-jpa</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.helidon.integrations.cdi</groupId>
+            <artifactId>helidon-integrations-cdi-hibernate</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.helidon.integrations.cdi</groupId>
+            <artifactId>helidon-integrations-cdi-jta-weld</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.helidon.integrations.cdi</groupId>
+            <artifactId>helidon-integrations-cdi-datasource-hikaricp</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+        </dependency>
+        <!-- Le pilote : COPY passe par son CopyManager, la transaction distribuée par ses
+             sources XA. -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+
+        <!-- Jakarta Validation, et le JSON des requêtes. -->
+        <dependency>
+            <groupId>io.helidon.microprofile.bean-validation</groupId>
+            <artifactId>helidon-microprofile-bean-validation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-jackson</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.helidon.logging</groupId>
+            <artifactId>helidon-logging-jul</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.helidon.microprofile.testing</groupId>
+            <artifactId>helidon-microprofile-testing-junit5</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- PostgreSQL dans un conteneur, démarré par les tests. -->
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers-postgresql</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <compilerArgs combine.children="append">
+                        <!-- Des classes de Helidon portent des annotations OSGi absentes du
+                             classpath, ce que javac signalerait. -->
+                        <arg>-Xlint:-classfile</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <!-- Ce que chaque classe de test écrit : target/surefire-reports/<classe>-output.txt. -->
+                    <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                    <!-- Le journal de Narayana, pour reprendre les transactions après une panne. -->
+                    <systemPropertyVariables>
+                        <ObjectStoreEnvironmentBean.objectStoreDir>${project.build.directory}/narayana</ObjectStoreEnvironmentBean.objectStoreDir>
+                        <com.arjuna.ats.arjuna.objectstore.objectStoreDir>${project.build.directory}/narayana</com.arjuna.ats.arjuna.objectstore.objectStoreDir>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

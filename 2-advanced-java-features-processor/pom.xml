@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>ch.heigvd.amt</groupId>
+        <artifactId>amt-exemples</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>2-advanced-java-features-processor</artifactId>
+    <name>Annotation processor @Describe</name>
+    <description>
+        L'annotation @Describe et le processor qui génère, à la compilation, ce que la
+        reflection lisait à l'exécution. Un module à part, parce que javac doit l'avoir
+        compilé avant le code qu'il traite.
+    </description>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <!-- Sans cette ligne, javac lancerait le processor qu'il est en train de compiler. -->
+                    <proc>none</proc>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_1.xsd"
+             version="3.1">
+
+    <!-- Hibernate seul, sans Helidon : Postgres.entityManagerFactory crée ces unités et leur
+         passe la connexion. Elles ne sont pas dans persistence.xml, car Helidon prendrait
+         chaque unité de ce fichier pour la sienne. Deux unités, car deux classes Concert ne
+         peuvent pas cohabiter dans la même. -->
+
+    <persistence-unit name="concerts" transaction-type="RESOURCE_LOCAL">
+        <class>ch.heigvd.amt.locking.Concert</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <property name="hibernate.show_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+
+    <persistence-unit name="bulk" transaction-type="RESOURCE_LOCAL">
+        <class>ch.heigvd.amt.bulk.Concert</class>
+        <class>ch.heigvd.amt.bulk.IdentityConcert</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <property name="hibernate.generate_statistics" value="true"/>
+        </properties>
+    </persistence-unit>
+
+</persistence>
