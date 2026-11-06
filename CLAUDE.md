@@ -111,5 +111,19 @@ educational, not production-ready, and leaves out the hardening the concept does
   that file holds only the application's JTA unit; the hand-made `RESOURCE_LOCAL` units live
   in `src/test/resources/META-INF/persistence-resource-local.xml`, which the test helper
   hands to Hibernate's `Bootstrap`.
+- `6-database-evolution-and-migration` (deck `6-database-evolution-and-migration.tsx`): schema
+  generation modes, Flyway (scripts, history, immutability), data migrations (`V4`, the batched
+  `V6`), rollback and roll forward, backward compatibility, expand and contract (the column
+  rename `V7`/`V8`, a table renamed behind a view, two tables merged), a Helidon MP application
+  that runs Flyway at startup before Hibernate validates, then jOOQ's typed query and the
+  compile error after a rename. The scripts in `src/main/resources/db/migration` are the ones the
+  deck shows: **their exact text fixes the checksums on its slides**, and `FlywayTest` and
+  `ImmutabilityTest` pin those values. Helidon has no Flyway extension, so `application.Migrations`
+  is a CDI observer; without its `PLATFORM_BEFORE` priority Hibernate starts first and rejects
+  the empty database. `./mvnw compile` needs Docker here: `docker-maven-plugin` starts a build
+  database at `initialize`, then Flyway (`target` 3, because `StageReport` reads `stage.name`) and
+  jOOQ's generator run at `generate-sources`. The timings on the batched slide are measured by
+  `BatchedMigrationTest` and vary from run to run; its output is in
+  `target/surefire-reports/ch.heigvd.amt.data.BatchedMigrationTest-output.txt`.
 
 Add one here, with its deck and sections, before starting it.

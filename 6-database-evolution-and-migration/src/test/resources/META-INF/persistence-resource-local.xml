@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_1.xsd"
+             version="3.1">
+
+    <!-- Hibernate seul, sans Helidon : Postgres.startHibernate crée ces unités et leur passe la
+         connexion et le mode de génération. Elles ne sont pas dans persistence.xml, car Helidon
+         prendrait chaque unité de ce fichier pour la sienne. Deux unités, car deux classes Stage
+         ne peuvent pas cohabiter dans la même. -->
+
+    <persistence-unit name="stage-name" transaction-type="RESOURCE_LOCAL">
+        <class>ch.heigvd.amt.generation.Stage</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    </persistence-unit>
+
+    <persistence-unit name="stage-label" transaction-type="RESOURCE_LOCAL">
+        <class>ch.heigvd.amt.generation.renamed.Stage</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    </persistence-unit>
+
+</persistence>

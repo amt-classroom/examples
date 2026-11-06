@@ -24,6 +24,9 @@
              transactions préparées, et une application Helidon MP : JTA, JPA, Jakarta
              Validation, validation en deux phases). -->
         <module>5-transactions-and-validation</module>
+        <!-- Évolution et migration de bases de données (génération du schéma, Flyway, migrations
+             de données, expand and contract, jOOQ, et une application Helidon MP). -->
+        <module>6-database-evolution-and-migration</module>
     </modules>
 
     <properties>
@@ -31,6 +34,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- Hibernate 6.6 implémente Jakarta Persistence 3.1. -->
         <hibernate.version>6.6.58.Final</hibernate.version>
+        <postgresql.version>42.7.14</postgresql.version>
+        <flyway.version>11.20.3</flyway.version>
+        <jooq.version>3.21.9</jooq.version>
     </properties>
 
     <dependencyManagement>
@@ -74,7 +80,27 @@
             <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
-                <version>42.7.14</version>
+                <version>${postgresql.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-core</artifactId>
+                <version>${flyway.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-database-postgresql</artifactId>
+                <version>${flyway.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq</artifactId>
+                <version>${jooq.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-codegen</artifactId>
+                <version>${jooq.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.zaxxer</groupId>
@@ -151,6 +177,16 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
                     <version>3.4.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.flywaydb</groupId>
+                    <artifactId>flyway-maven-plugin</artifactId>
+                    <version>${flyway.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.jooq</groupId>
+                    <artifactId>jooq-codegen-maven</artifactId>
+                    <version>${jooq.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>

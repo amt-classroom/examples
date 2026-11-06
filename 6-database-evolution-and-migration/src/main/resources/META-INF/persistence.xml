@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_1.xsd"
+             version="3.1">
+
+    <!-- L'unité de l'application. Flyway fait évoluer le schéma : Hibernate le compare seulement
+         aux classes, et refuse de démarrer sur un écart. -->
+    <persistence-unit name="festival" transaction-type="JTA">
+        <jta-data-source>festival</jta-data-source>
+        <class>ch.heigvd.amt.application.Stage</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+            <property name="jakarta.persistence.schema-generation.database.action" value="validate"/>
+        </properties>
+    </persistence-unit>
+</persistence>
