@@ -1,9 +1,12 @@
 # 7 - Inversion et injection de dépendances
 
 Des exemples exécutables sur l'inversion des dépendances, l'injection, Jakarta CDI et les
-doublures de test. Chaque exemple est un test JUnit. Ils restent dans la billetterie d'un
-festival : un `ReservationService` qui a besoin d'un `Mailer` pour confirmer une réservation, et
-d'un `PaymentGateway` pour débiter l'acheteur.
+doublures de test. Chaque exemple est un test JUnit.
+
+Les paquets `inversion`, `injection` et `control` montrent les rôles sur trois types sans
+métier : une `Application` qui a besoin d'un `Logger`, et un `ConsoleLogger` qui le fournit. Les
+autres restent dans la billetterie d'un festival : un `ReservationService` qui a besoin d'un
+`Mailer` pour confirmer une réservation, et d'un `PaymentGateway` pour débiter l'acheteur.
 
 Les beans CDI tournent dans Helidon MP 4.5, dont le conteneur est Weld. Les doublures viennent de
 Mockito.
@@ -28,25 +31,32 @@ Les paquets sont sous `ch.heigvd.amt`. Chaque paquet contient une notion et son 
 | L'injection par le setter           | `injection.setter`     | `SetterInjectionTest`    |
 | L'injection par le conteneur        | `injection.container`  | `ContainerInjectionTest` |
 | L'inversion de contrôle             | `control`              | `InversionOfControlTest` |
-| Les points d'injection              | `cdi.points`           | `InjectionPointsTest`    |
-| Les portées et le proxy client      | `cdi.scopes`           | `ScopesTest`             |
-| L'ambiguïté                         | `cdi.ambiguity`        | `AmbiguityTest`          |
-| Le qualificateur `@Named`           | `cdi.named`            | `NamedTest`              |
-| Le qualificateur personnalisé       | `cdi.qualifier`        | `QualifierTest`          |
+| L'injection avec `@Inject`          | `cdi.points`           | `InjectionPointsTest`    |
+| Le scope et le client proxy         | `cdi.scopes`           | `ScopesTest`             |
+| La dépendance ambiguë               | `cdi.ambiguity`        | `AmbiguityTest`          |
+| Le qualifier `@Named`               | `cdi.named`            | `NamedTest`              |
+| Le qualifier personnalisé           | `cdi.qualifier`        | `QualifierTest`          |
 | L'alternative                       | `cdi.alternative`      | `AlternativeTest`        |
-| Le producteur                       | `cdi.producer`         | `ProducerTest`           |
-| La recherche programmatique         | `cdi.lookup`           | `LookupTest`             |
-| Le cycle de vie                     | `cdi.lifecycle`        | `LifecycleTest`          |
-| L'intercepteur                      | `cdi.interceptor`      | `InterceptorTest`        |
-| Le décorateur                       | `cdi.decorator`        | `DecoratorTest`          |
-| L'événement et l'observateur        | `cdi.events`           | `EventsTest`             |
-| L'événement asynchrone              | `cdi.events.async`     | `AsyncEventsTest`        |
-| L'événement qualifié                | `cdi.events.qualified` | `QualifiedEventsTest`    |
+| Le producer `@Produces`             | `cdi.producer`         | `ProducerTest`           |
+| Le lookup avec `Instance`           | `cdi.lookup`           | `LookupTest`             |
+| Les callbacks du cycle de vie       | `cdi.lifecycle`        | `LifecycleTest`          |
+| L'interceptor                       | `cdi.interceptor`      | `InterceptorTest`        |
+| Le decorator                        | `cdi.decorator`        | `DecoratorTest`          |
+| L'event et l'observer               | `cdi.events`           | `EventsTest`             |
+| L'event asynchrone                  | `cdi.events.async`     | `AsyncEventsTest`        |
+| L'event qualifié                    | `cdi.events.qualified` | `QualifiedEventsTest`    |
+| Une bibliothèque qui réunit CDI     | `library`              | `LibraryTest`            |
 | Les doublures de test, avec Mockito | `doubles`              | un test par notion       |
 | Le test avec le conteneur           | `container`            | `ContainerTest`          |
 | Le mock dans le conteneur           | `container`            | `MockBeanTest`           |
 
 L'injection par le constructeur est celle du paquet `inversion`.
+
+Le paquet `library` assemble les notions de CDI dans une petite bibliothèque. Un `Publisher`
+produit deux livres, chacun avec son qualifier. L'étagère `LibraryShelf` reçoit ceux de fantasy
+à sa création. Le `Librarian` prête et reprend les livres. Le decorator `StampingShelf` marque
+prêté chaque livre qui quitte l'étagère, l'interceptor `BellInterceptor` sonne à chaque prêt et
+à chaque retour, et le `Manager` observe l'event que le bibliothécaire émet à chaque retour.
 
 ## Ce qui sert à faire tourner les exemples
 
@@ -61,4 +71,4 @@ L'injection par le constructeur est celle du paquet `inversion`.
 ## Ce que le module laisse de côté
 
 - Un vrai serveur SMTP et un vrai moyen de paiement.
-- Les portées `@SessionScoped` et `@Singleton`.
+- Les scopes `@SessionScoped` et `@Singleton`.

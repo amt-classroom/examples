@@ -130,8 +130,14 @@ educational, not production-ready, and leaves out the hardening the concept does
   and by the container, inversion of control (a Jakarta REST resource called over HTTP),
   Jakarta CDI one package per notion (injection points, scopes and the client proxy, ambiguity,
   `@Named`, custom qualifiers, alternatives, producers, `Instance`, lifecycle, interceptors,
-  decorators, events), then test doubles with Mockito (`doubles`) and tests inside the
-  container (`container`). Helidon MP 4.5, no database, no Docker. Simplified to the minimum on
+  decorators, events), the solution of the deck's closing exercise (`library`: a publisher, a
+  shelf, a librarian and a manager, added at the user's request on 2026-11-20; it is a deck
+  exercise, not a lab), then test doubles with Mockito (`doubles`) and tests inside the
+  container (`container`). The `inversion`, `injection` and `control` packages use a bare
+  `Application` / `Logger` / `ConsoleLogger` example, as the slides do, so that no class name
+  carries a role (the user asked for it on 2026-11-20: a `ReservationService` in the client
+  role confused the roles); the festival beans the CDI tests share (`ReservationService`,
+  `SmtpMailer`) are in `festival`. Helidon MP 4.5, no database, no Docker. Simplified to the minimum on
   2026-11-20, at the user's request: one or two tests per notion, and only the traps a slide
   states (the forgotten setter, the `@Named` typo, a lone matcher, `verify` on a `@MockBean`
   field). What only the speaker notes claim stays out. The module holds several variants of the
