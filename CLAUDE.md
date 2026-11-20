@@ -125,5 +125,20 @@ educational, not production-ready, and leaves out the hardening the concept does
   jOOQ's generator run at `generate-sources`. The timings on the batched slide are measured by
   `BatchedMigrationTest` and vary from run to run; its output is in
   `target/surefire-reports/ch.heigvd.amt.data.BatchedMigrationTest-output.txt`.
+- `7-dependency-inversion-and-injection` (deck `7-dependency-inversion-and-injection.tsx`): the
+  dependency inversion principle (`inversion.direct` against `inversion`), injection by setter
+  and by the container, inversion of control (a Jakarta REST resource called over HTTP),
+  Jakarta CDI one package per notion (injection points, scopes and the client proxy, ambiguity,
+  `@Named`, custom qualifiers, alternatives, producers, `Instance`, lifecycle, interceptors,
+  decorators, events), then test doubles with Mockito (`doubles`) and tests inside the
+  container (`container`). Helidon MP 4.5, no database, no Docker. Simplified to the minimum on
+  2026-11-20, at the user's request: one or two tests per notion, and only the traps a slide
+  states (the forgotten setter, the `@Named` typo, a lone matcher, `verify` on a `@MockBean`
+  field). What only the speaker notes claim stays out. The module holds several variants of the
+  same bean, so **no test may rely on bean discovery**: every `@HelidonTest` carries
+  `@DisableDiscovery` and names its beans with `@AddBean`, and there is no `beans.xml`.
+  `@AddBean` forces `@ApplicationScoped` unless told otherwise, which an interceptor or a
+  decorator rejects (`scope = Dependent.class`). `Container.start` boots Weld by hand for what
+  `@HelidonTest` cannot show: a startup the container refuses and its shutdown.
 
 Add one here, with its deck and sections, before starting it.

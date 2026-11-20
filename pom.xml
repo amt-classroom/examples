@@ -27,6 +27,9 @@
         <!-- Évolution et migration de bases de données (génération du schéma, Flyway, migrations
              de données, expand and contract, jOOQ, et une application Helidon MP). -->
         <module>6-database-evolution-and-migration</module>
+        <!-- Inversion et injection de dépendances (principe d'inversion, injection, inversion
+             de contrôle, Jakarta CDI dans Helidon MP, doublures de test avec Mockito). -->
+        <module>7-dependency-inversion-and-injection</module>
     </modules>
 
     <properties>
@@ -37,6 +40,8 @@
         <postgresql.version>42.7.14</postgresql.version>
         <flyway.version>11.20.3</flyway.version>
         <jooq.version>3.21.9</jooq.version>
+        <!-- La version de Mockito que Helidon 4.5 utilise pour @MockBean. -->
+        <mockito.version>5.24.0</mockito.version>
     </properties>
 
     <dependencyManagement>
@@ -71,6 +76,11 @@
                 <version>4.5.5</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-junit-jupiter</artifactId>
+                <version>${mockito.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.hibernate.orm</groupId>

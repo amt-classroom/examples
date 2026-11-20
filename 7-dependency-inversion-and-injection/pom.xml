@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>ch.heigvd.amt</groupId>
+        <artifactId>amt-exemples</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>7-dependency-inversion-and-injection</artifactId>
+    <name>Inversion et injection de dépendances</name>
+    <description>
+        Des exemples exécutables sur l'inversion des dépendances, l'injection, l'inversion de
+        contrôle, Jakarta CDI dans Helidon MP et les doublures de test avec Mockito.
+    </description>
+
+    <dependencies>
+        <!-- Le serveur, CDI (Weld), Jakarta REST et MicroProfile Config. -->
+        <dependency>
+            <groupId>io.helidon.microprofile.bundles</groupId>
+            <artifactId>helidon-microprofile-core</artifactId>
+        </dependency>
+        <!-- Le JSON des requêtes HTTP. -->
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-jackson</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.helidon.logging</groupId>
+            <artifactId>helidon-logging-jul</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- @HelidonTest : le conteneur démarre pour la classe de test. -->
+        <dependency>
+            <groupId>io.helidon.microprofile.testing</groupId>
+            <artifactId>helidon-microprofile-testing-junit5</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- @MockBean : un bean remplacé par une doublure Mockito dans le conteneur. -->
+        <dependency>
+            <groupId>io.helidon.microprofile.testing</groupId>
+            <artifactId>helidon-microprofile-testing-mocking</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- Mockito et son extension JUnit 5 (@Mock, @InjectMocks, @Captor). -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <compilerArgs combine.children="append">
+                        <!-- Des classes de Helidon portent des annotations OSGi absentes du
+                             classpath, ce que javac signalerait. -->
+                        <arg>-Xlint:-classfile</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <!-- Ce que chaque classe de test écrit : target/surefire-reports/<classe>-output.txt. -->
+                    <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                    <!-- Mockito s'attache à la JVM pendant les tests. -->
+                    <argLine>-XX:+EnableDynamicAgentLoading</argLine>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
