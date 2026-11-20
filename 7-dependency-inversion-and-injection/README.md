@@ -24,39 +24,63 @@ Le module n'a besoin ni de Docker ni d'une base de données, et tourne en quelqu
 Les paquets sont sous `ch.heigvd.amt`. Chaque paquet contient une notion et son test. Le paquet
 `festival` contient les types qu'ils partagent.
 
-| Notion                              | Paquet                 | Test                     |
-| ----------------------------------- | ---------------------- | ------------------------ |
-| La dépendance directe               | `inversion.direct`     | `DirectDependencyTest`   |
-| L'inversion des dépendances         | `inversion`            | `InversionTest`          |
-| L'injection par le setter           | `injection.setter`     | `SetterInjectionTest`    |
-| L'injection par le conteneur        | `injection.container`  | `ContainerInjectionTest` |
-| L'inversion de contrôle             | `control`              | `InversionOfControlTest` |
-| L'injection avec `@Inject`          | `cdi.points`           | `InjectionPointsTest`    |
-| Le scope et le client proxy         | `cdi.scopes`           | `ScopesTest`             |
-| La dépendance ambiguë               | `cdi.ambiguity`        | `AmbiguityTest`          |
-| Le qualifier `@Named`               | `cdi.named`            | `NamedTest`              |
-| Le qualifier personnalisé           | `cdi.qualifier`        | `QualifierTest`          |
-| L'alternative                       | `cdi.alternative`      | `AlternativeTest`        |
-| Le producer `@Produces`             | `cdi.producer`         | `ProducerTest`           |
-| Le lookup avec `Instance`           | `cdi.lookup`           | `LookupTest`             |
-| Les callbacks du cycle de vie       | `cdi.lifecycle`        | `LifecycleTest`          |
-| L'interceptor                       | `cdi.interceptor`      | `InterceptorTest`        |
-| Le decorator                        | `cdi.decorator`        | `DecoratorTest`          |
-| L'event et l'observer               | `cdi.events`           | `EventsTest`             |
-| L'event asynchrone                  | `cdi.events.async`     | `AsyncEventsTest`        |
-| L'event qualifié                    | `cdi.events.qualified` | `QualifiedEventsTest`    |
-| Une bibliothèque qui réunit CDI     | `library`              | `LibraryTest`            |
-| Les doublures de test, avec Mockito | `doubles`              | un test par notion       |
-| Le test avec le conteneur           | `container`            | `ContainerTest`          |
-| Le mock dans le conteneur           | `container`            | `MockBeanTest`           |
+### Les rôles, sans conteneur puis avec
+
+| Notion                       | Paquet                | Test                     |
+| ---------------------------- | --------------------- | ------------------------ |
+| La dépendance directe        | `inversion.direct`    | `DirectDependencyTest`   |
+| L'inversion des dépendances  | `inversion`           | `InversionTest`          |
+| L'injection par le setter    | `injection.setter`    | `SetterInjectionTest`    |
+| L'injection par le conteneur | `injection.container` | `ContainerInjectionTest` |
+| L'inversion de contrôle      | `control`             | `InversionOfControlTest` |
 
 L'injection par le constructeur est celle du paquet `inversion`.
 
-Le paquet `library` assemble les notions de CDI dans une petite bibliothèque. Un `Publisher`
-produit deux livres, chacun avec son qualifier. L'étagère `LibraryShelf` reçoit ceux de fantasy
-à sa création. Le `Librarian` prête et reprend les livres. Le decorator `StampingShelf` marque
+### Le conteneur CDI
+
+| Notion                        | Paquet          | Test                  |
+| ----------------------------- | --------------- | --------------------- |
+| L'injection avec `@Inject`    | `cdi.points`    | `InjectionPointsTest` |
+| Le scope                      | `cdi.scopes`    | `ScopesTest`          |
+| Les callbacks du cycle de vie | `cdi.lifecycle` | `LifecycleTest`       |
+
+### Les design patterns que CDI fournit
+
+Chaque mécanisme de CDI réalise un design pattern : le conteneur fournit la mécanique, les
+beans tiennent les rôles.
+
+| Pattern     | Notion                        | Paquet                 | Test                  |
+| ----------- | ----------------------------- | ---------------------- | --------------------- |
+| Singleton   | Le singleton écrit à la main  | `singleton`            | `SingletonTest`       |
+| Proxy       | Le client proxy               | `cdi.scopes`           | `ScopesTest`          |
+| Strategy    | La dépendance ambiguë         | `cdi.ambiguity`        | `AmbiguityTest`       |
+| Strategy    | Le qualifier `@Named`         | `cdi.named`            | `NamedTest`           |
+| Strategy    | Le qualifier personnalisé     | `cdi.qualifier`        | `QualifierTest`       |
+| Strategy    | L'alternative                 | `cdi.alternative`      | `AlternativeTest`     |
+| Strategy    | Le lookup avec `Instance`     | `cdi.lookup`           | `LookupTest`          |
+| Factory     | Le producer `@Produces`       | `cdi.producer`         | `ProducerTest`        |
+| Interceptor | L'interceptor                 | `cdi.interceptor`      | `InterceptorTest`     |
+| Decorator   | Le decorator                  | `cdi.decorator`        | `DecoratorTest`       |
+| Observer    | L'event et l'observer         | `cdi.events`           | `EventsTest`          |
+
+Le singleton que le conteneur tient à notre place est le bean `@ApplicationScoped` du paquet
+`injection.container`.
+
+Le paquet `library` réunit ces patterns dans une petite bibliothèque, testée par `LibraryTest`.
+Un `Publisher` produit deux livres, chacun avec son qualifier. L'étagère `LibraryShelf` reçoit
+ceux de fantasy à sa création. Le `Librarian` prête et reprend les livres. Le decorator `StampingShelf` marque
 prêté chaque livre qui quitte l'étagère, l'interceptor `BellInterceptor` sonne à chaque prêt et
 à chaque retour, et le `Manager` observe l'event que le bibliothécaire émet à chaque retour.
+
+### Les tests
+
+| Notion                              | Paquet      | Test               |
+| ----------------------------------- | ----------- | ------------------ |
+| Le stub                             | `doubles`   | `StubTest`         |
+| Le mock                             | `doubles`   | `MockTest`         |
+| Le fake                             | `doubles`   | `FakeTest`         |
+| Une doublure faite par Mockito      | `doubles`   | `MockitoTest`      |
+| Le test avec le conteneur           | `container` | `ContainerTest`    |
 
 ## Ce qui sert à faire tourner les exemples
 
@@ -72,3 +96,6 @@ prêté chaque livre qui quitte l'étagère, l'interceptor `BellInterceptor` son
 
 - Un vrai serveur SMTP et un vrai moyen de paiement.
 - Les scopes `@SessionScoped` et `@Singleton`.
+- Les events asynchrones et les events qualifiés.
+- Le reste de Mockito : annotations, matchers d'arguments, nombre et ordre des appels,
+  exceptions simulées, spies, et `@MockBean` dans le conteneur.

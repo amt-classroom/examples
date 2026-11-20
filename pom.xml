@@ -40,7 +40,7 @@
         <postgresql.version>42.7.14</postgresql.version>
         <flyway.version>11.20.3</flyway.version>
         <jooq.version>3.21.9</jooq.version>
-        <!-- La version de Mockito que Helidon 4.5 utilise pour @MockBean. -->
+        <!-- Mockito n'est pas dans le BOM de Helidon. -->
         <mockito.version>5.24.0</mockito.version>
     </properties>
 

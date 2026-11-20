@@ -14,7 +14,7 @@ public class Librarian {
     @Inject
     Shelf shelf;
 
-    @Inject @Returned
+    @Inject
     Event<Book> returned;
 
     public Book lend(String title, String borrower) {

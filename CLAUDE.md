@@ -130,7 +130,7 @@ educational, not production-ready, and leaves out the hardening the concept does
   and by the container, inversion of control (a Jakarta REST resource called over HTTP),
   Jakarta CDI one package per notion (injection points, scopes and the client proxy, ambiguity,
   `@Named`, custom qualifiers, alternatives, producers, `Instance`, lifecycle, interceptors,
-  decorators, events), the solution of the deck's closing exercise (`library`: a publisher, a
+  decorators, events) plus a hand-written `singleton`, the solution of the deck's closing exercise (`library`: a publisher, a
   shelf, a librarian and a manager, added at the user's request on 2026-11-20; it is a deck
   exercise, not a lab), then test doubles with Mockito (`doubles`) and tests inside the
   container (`container`). The `inversion`, `injection` and `control` packages use a bare
@@ -139,8 +139,11 @@ educational, not production-ready, and leaves out the hardening the concept does
   role confused the roles); the festival beans the CDI tests share (`ReservationService`,
   `SmtpMailer`) are in `festival`. Helidon MP 4.5, no database, no Docker. Simplified to the minimum on
   2026-11-20, at the user's request: one or two tests per notion, and only the traps a slide
-  states (the forgotten setter, the `@Named` typo, a lone matcher, `verify` on a `@MockBean`
-  field). What only the speaker notes claim stays out. The module holds several variants of the
+  states (the forgotten setter, the `@Named` typo). What only the speaker notes claim stays out. Later the same day
+  the user cut the deck's details, and the module with them: asynchronous and qualified events, `@MockBean`, and all of Mockito beyond `mock`,
+  `when` and `verify` (annotations, matchers, verification modes, stubbed exceptions, spies).
+  Do not add them back unless the deck does. Setter injection and the `Instance` lookup were cut
+  too and restored at once: the user judged that went too far. The module holds several variants of the
   same bean, so **no test may rely on bean discovery**: every `@HelidonTest` carries
   `@DisableDiscovery` and names its beans with `@AddBean`, and there is no `beans.xml`.
   `@AddBean` forces `@ApplicationScoped` unless told otherwise, which an interceptor or a

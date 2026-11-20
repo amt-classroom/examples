@@ -6,7 +6,7 @@ import jakarta.enterprise.event.Observes;
 /** Le responsable observe chaque retour. Le bibliothécaire ne dépend pas de lui. */
 @ApplicationScoped
 public class Manager {
-    void onReturn(@Observes @Returned Book book) {
+    void onReturn(@Observes Book book) {
         System.out.println("Manager: " + book.title() + " is back");
     }
 }
