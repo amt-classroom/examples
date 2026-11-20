@@ -8,22 +8,21 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-/** Le couplage faible : le service accepte tout fournisseur de Mailer. */
+/** Le couplage faible : le haut niveau accepte tout fournisseur de Logger. */
 class InversionTest {
 
     @Test
-    void mainChoosesSmtp() {
-        assertEquals(List.of("SMTP to ada@example.com: 2 tickets reserved"),
-                printed(() -> Main.main(new String[0])));
+    void mainChoosesTheConsole() {
+        assertEquals(List.of("Performing an operation"), printed(() -> Main.main(new String[0])));
     }
 
     @Test
-    void aTestChoosesAnotherMailer() {
-        List<String> sent = new ArrayList<>();
-        var service = new ReservationService((to, message) -> sent.add(to + ": " + message));
+    void aTestChoosesAnotherLogger() {
+        List<String> logged = new ArrayList<>();
+        var app = new Application(logged::add);
 
-        service.reserve("ada@example.com", 2);
+        app.performOperation();
 
-        assertEquals(List.of("ada@example.com: 2 tickets reserved"), sent);
+        assertEquals(List.of("Performing an operation"), logged);
     }
 }

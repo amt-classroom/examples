@@ -1,10 +1,9 @@
-package ch.heigvd.amt.injection.container;
+package ch.heigvd.amt.festival;
 
-import ch.heigvd.amt.festival.Mailer;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
-/** Le conteneur joue l'injecteur : il crée le service et remplit le champ. Personne n'écrit new. */
+/** Le service de réservation confirme chaque réservation par e-mail. */
 @ApplicationScoped
 public class ReservationService {
     @Inject

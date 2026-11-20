@@ -15,16 +15,15 @@ import jakarta.inject.Inject;
 /** L'injection par le conteneur : il crée les deux beans et relie l'un à l'autre. */
 @HelidonTest
 @DisableDiscovery
-@AddBean(SmtpMailer.class)
-@AddBean(ReservationService.class)
+@AddBean(ConsoleLogger.class)
+@AddBean(Application.class)
 class ContainerInjectionTest {
 
     @Inject
-    ReservationService service;
+    Application app;
 
     @Test
-    void theContainerInjectsTheMailer() {
-        assertEquals(List.of("SMTP to ada@example.com: 2 tickets reserved"),
-                printed(() -> service.reserve("ada@example.com", 2)));
+    void theContainerInjectsTheLogger() {
+        assertEquals(List.of("Performing an operation"), printed(app::performOperation));
     }
 }

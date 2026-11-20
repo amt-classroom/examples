@@ -8,14 +8,14 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import ch.heigvd.amt.festival.Mailer;
-import ch.heigvd.amt.injection.container.SmtpMailer;
+import ch.heigvd.amt.festival.SmtpMailer;
 import io.helidon.microprofile.testing.AddBean;
 import io.helidon.microprofile.testing.DisableDiscovery;
 import io.helidon.microprofile.testing.junit5.HelidonTest;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 
-/** Le conteneur place le décorateur devant SmtpMailer, partout où Mailer est injecté. */
+/** Le conteneur place le decorator devant SmtpMailer, partout où Mailer est injecté. */
 @HelidonTest
 @DisableDiscovery
 @AddBean(value = SignatureDecorator.class, scope = Dependent.class)

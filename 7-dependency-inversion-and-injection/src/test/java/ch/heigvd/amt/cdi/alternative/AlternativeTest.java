@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import ch.heigvd.amt.injection.container.ReservationService;
-import ch.heigvd.amt.injection.container.SmtpMailer;
+import ch.heigvd.amt.festival.ReservationService;
+import ch.heigvd.amt.festival.SmtpMailer;
 import io.helidon.microprofile.testing.AddBean;
 import io.helidon.microprofile.testing.DisableDiscovery;
 import io.helidon.microprofile.testing.junit5.HelidonTest;

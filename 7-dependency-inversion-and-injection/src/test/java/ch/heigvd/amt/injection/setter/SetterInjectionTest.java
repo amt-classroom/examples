@@ -7,25 +7,24 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import ch.heigvd.amt.injection.container.SmtpMailer;
+import ch.heigvd.amt.injection.container.ConsoleLogger;
 
 /** L'injection par le setter : la dépendance arrive après la création, ou jamais. */
 class SetterInjectionTest {
 
     @Test
     void theSetterReceivesTheDependency() {
-        var service = new ReservationService();
-        service.setMailer(new SmtpMailer());
+        var app = new Application();
+        app.setLogger(new ConsoleLogger());
 
-        assertEquals(List.of("SMTP to ada@example.com: 2 tickets reserved"),
-                printed(() -> service.reserve("ada@example.com", 2)));
+        assertEquals(List.of("Performing an operation"), printed(app::performOperation));
     }
 
     @Test
     void aForgottenSetterGoesUnnoticed() {
-        // Le piège : l'objet existe sans sa dépendance, et réserve sans confirmer.
-        var service = new ReservationService();
+        // Le piège : le client existe sans sa dépendance, et travaille sans rien journaliser.
+        var app = new Application();
 
-        assertEquals(List.of(), printed(() -> service.reserve("ada@example.com", 2)));
+        assertEquals(List.of(), printed(app::performOperation));
     }
 }

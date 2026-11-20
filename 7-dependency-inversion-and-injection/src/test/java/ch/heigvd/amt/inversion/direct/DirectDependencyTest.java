@@ -7,14 +7,13 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-/** Le couplage fort : impossible de tester ce service sans son SmtpMailer. */
+/** Le couplage fort : impossible de tester le haut niveau sans exécuter le bas niveau. */
 class DirectDependencyTest {
 
     @Test
-    void theServiceAlwaysSendsARealMail() {
-        var service = new ReservationService();
+    void theApplicationAlwaysWritesToTheConsole() {
+        var app = new Application();
 
-        assertEquals(List.of("SMTP to ada@example.com: 2 tickets reserved"),
-                printed(() -> service.reserve("ada@example.com", 2)));
+        assertEquals(List.of("Performing an operation"), printed(app::performOperation));
     }
 }

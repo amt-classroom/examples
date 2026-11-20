@@ -1,9 +1,8 @@
-package ch.heigvd.amt.injection.container;
+package ch.heigvd.amt.festival;
 
-import ch.heigvd.amt.festival.Mailer;
 import jakarta.enterprise.context.ApplicationScoped;
 
-/** Un bean : {@code @ApplicationScoped} confie la classe au conteneur. */
+/** Le fournisseur de Mailer que les exemples partagent : il écrit sur la sortie. */
 @ApplicationScoped
 public class SmtpMailer implements Mailer {
     public void send(String to, String message) {
