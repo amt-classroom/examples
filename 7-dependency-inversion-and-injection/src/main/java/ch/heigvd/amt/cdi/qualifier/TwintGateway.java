@@ -3,7 +3,7 @@ package ch.heigvd.amt.cdi.qualifier;
 import ch.heigvd.amt.festival.PaymentGateway;
 import jakarta.enterprise.context.ApplicationScoped;
 
-/** Le bean que désigne le qualificateur {@code @Twint}. */
+/** Le bean que désigne le qualifier {@code @Twint}. */
 @Twint
 @ApplicationScoped
 public class TwintGateway implements PaymentGateway {

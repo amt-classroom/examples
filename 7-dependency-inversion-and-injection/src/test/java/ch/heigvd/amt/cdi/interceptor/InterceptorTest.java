@@ -13,7 +13,7 @@ import io.helidon.microprofile.testing.junit5.HelidonTest;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 
-/** Le conteneur place l'intercepteur autour de l'appel. */
+/** Le conteneur place l'interceptor autour de l'appel. */
 @HelidonTest
 @DisableDiscovery
 @AddBean(value = LoggedInterceptor.class, scope = Dependent.class)

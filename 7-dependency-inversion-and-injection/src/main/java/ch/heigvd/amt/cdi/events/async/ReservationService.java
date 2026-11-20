@@ -7,7 +7,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
 
-/** fireAsync rend la main tout de suite : le conteneur appelle les observateurs sur un autre thread. */
+/** fireAsync rend la main tout de suite : le conteneur appelle les observers sur un autre thread. */
 @ApplicationScoped
 public class ReservationService {
     @Inject Event<Reservation> reserved;

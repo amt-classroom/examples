@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 
 import jakarta.interceptor.InterceptorBinding;
 
-/** La liaison entre des beans et un intercepteur : le bean ne nomme pas la classe qui l'intercepte. */
+/** La liaison entre des beans et un interceptor : le bean ne nomme pas la classe qui l'intercepte. */
 @InterceptorBinding
 @Retention(RUNTIME)
 @Target({TYPE, METHOD})

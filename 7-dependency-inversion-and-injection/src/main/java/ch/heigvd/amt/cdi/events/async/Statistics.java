@@ -6,7 +6,7 @@ import ch.heigvd.amt.festival.Reservation;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.ObservesAsync;
 
-/** Un observateur asynchrone tourne sur un autre thread : son état doit le supporter. */
+/** Un observer asynchrone tourne sur un autre thread : son état doit le supporter. */
 @ApplicationScoped
 public class Statistics {
     private final AtomicInteger tickets = new AtomicInteger();
@@ -21,7 +21,7 @@ public class Statistics {
         return tickets.get();
     }
 
-    /** Le thread sur lequel le conteneur a appelé l'observateur. */
+    /** Le thread sur lequel le conteneur a appelé l'observer. */
     public String thread() {
         return thread;
     }

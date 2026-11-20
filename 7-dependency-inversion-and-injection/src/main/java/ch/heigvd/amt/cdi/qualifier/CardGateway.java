@@ -3,7 +3,7 @@ package ch.heigvd.amt.cdi.qualifier;
 import ch.heigvd.amt.festival.PaymentGateway;
 import jakarta.enterprise.context.ApplicationScoped;
 
-/** Le bean que désigne le qualificateur {@code @Card}. */
+/** Le bean que désigne le qualifier {@code @Card}. */
 @Card
 @ApplicationScoped
 public class CardGateway implements PaymentGateway {

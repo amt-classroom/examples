@@ -9,7 +9,7 @@ import io.helidon.microprofile.testing.DisableDiscovery;
 import io.helidon.microprofile.testing.junit5.HelidonTest;
 import jakarta.inject.Inject;
 
-/** fire appelle les observateurs et attend leur fin. */
+/** fire appelle les observers et attend leur fin. */
 @HelidonTest
 @DisableDiscovery
 @AddBean(ReservationService.class)

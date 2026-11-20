@@ -8,7 +8,7 @@ import jakarta.inject.Inject;
 
 /**
  * Notre code choisit le bean pendant l'exécution. {@code @Any} demande tous les beans du type,
- * quel que soit leur qualificateur.
+ * quel que soit leur qualifier.
  */
 @ApplicationScoped
 public class Checkout {

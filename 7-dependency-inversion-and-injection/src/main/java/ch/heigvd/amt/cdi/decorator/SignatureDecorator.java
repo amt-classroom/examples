@@ -8,7 +8,7 @@ import jakarta.inject.Inject;
 import jakarta.interceptor.Interceptor;
 
 /**
- * Un décorateur implémente l'interface du bean qu'il décore, et le conteneur lui injecte ce
+ * Un decorator implémente l'interface du bean qu'il décore, et le conteneur lui injecte ce
  * bean. Il connaît l'interface : il peut porter de la logique métier.
  */
 @Decorator

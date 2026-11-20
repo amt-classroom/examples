@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 
 import jakarta.inject.Qualifier;
 
-/** Un qualificateur qui trie les événements d'un même type. */
+/** Un qualifier qui trie les events d'un même type. */
 @Qualifier
 @Retention(RUNTIME)
 @Target({FIELD, PARAMETER})

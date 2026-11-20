@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 
 import jakarta.inject.Qualifier;
 
-/** Un qualificateur personnalisé : une faute de frappe ne compile plus. */
+/** Un qualifier personnalisé : une faute de frappe ne compile plus. */
 @Qualifier
 @Retention(RUNTIME)
 @Target({TYPE, METHOD, FIELD, PARAMETER})

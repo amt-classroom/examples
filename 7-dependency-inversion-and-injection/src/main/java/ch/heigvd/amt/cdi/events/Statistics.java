@@ -4,7 +4,7 @@ import ch.heigvd.amt.festival.Reservation;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 
-/** Le conteneur appelle onReserved pour chaque événement de type Reservation. */
+/** Le conteneur appelle onReserved pour chaque event de type Reservation. */
 @ApplicationScoped
 public class Statistics {
     private int tickets;

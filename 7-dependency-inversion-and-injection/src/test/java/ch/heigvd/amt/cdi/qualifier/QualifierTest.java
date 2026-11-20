@@ -9,7 +9,7 @@ import io.helidon.microprofile.testing.DisableDiscovery;
 import io.helidon.microprofile.testing.junit5.HelidonTest;
 import jakarta.inject.Inject;
 
-/** Un qualificateur personnalisé distingue deux beans du même type par une annotation. */
+/** Un qualifier personnalisé distingue deux beans du même type par une annotation. */
 @HelidonTest
 @DisableDiscovery
 @AddBean(CardGateway.class)

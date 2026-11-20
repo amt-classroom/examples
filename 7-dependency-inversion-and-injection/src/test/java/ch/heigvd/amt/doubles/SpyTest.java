@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-/** Un espion enveloppe un vrai objet : il exécute les vraies méthodes et enregistre les appels. */
+/** Un spy enveloppe un vrai objet : il exécute les vraies méthodes et enregistre les appels. */
 class SpyTest {
 
     @Test

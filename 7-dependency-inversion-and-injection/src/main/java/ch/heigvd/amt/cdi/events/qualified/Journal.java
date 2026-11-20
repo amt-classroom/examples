@@ -7,7 +7,7 @@ import ch.heigvd.amt.festival.Reservation;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 
-/** L'observateur qualifié ne reçoit que ses événements ; l'autre les reçoit tous. */
+/** L'observer qualifié ne reçoit que ses events ; l'autre les reçoit tous. */
 @ApplicationScoped
 public class Journal {
     private final List<String> entries = new ArrayList<>();

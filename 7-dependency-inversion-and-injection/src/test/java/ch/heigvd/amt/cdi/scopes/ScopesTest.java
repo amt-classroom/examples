@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import ch.heigvd.amt.Container;
 import jakarta.enterprise.context.control.RequestContextController;
 
-/** La durée de vie des instances selon leur portée, et le proxy que le conteneur injecte. */
+/** La durée de vie des instances selon leur scope, et le proxy que le conteneur injecte. */
 class ScopesTest {
 
     @Test

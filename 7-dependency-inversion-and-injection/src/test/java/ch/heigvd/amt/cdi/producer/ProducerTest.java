@@ -11,7 +11,7 @@ import io.helidon.microprofile.testing.DisableDiscovery;
 import io.helidon.microprofile.testing.junit5.HelidonTest;
 import jakarta.inject.Inject;
 
-/** Un producteur rend injectables une classe du JDK et une simple chaîne. */
+/** Un producer rend injectables une classe du JDK et une simple chaîne. */
 @HelidonTest
 @DisableDiscovery
 @AddBean(Producers.class)

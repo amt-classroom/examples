@@ -5,7 +5,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
 
-/** Deux émetteurs du même type d'événement : l'un sans qualificateur, l'autre avec. */
+/** Deux émetteurs du même type d'event : l'un sans qualifier, l'autre avec. */
 @ApplicationScoped
 public class ReservationService {
     @Inject

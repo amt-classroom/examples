@@ -12,7 +12,7 @@ import io.helidon.microprofile.testing.DisableDiscovery;
 import io.helidon.microprofile.testing.junit5.HelidonTest;
 import jakarta.inject.Inject;
 
-/** Un qualificateur trie les événements d'un même type. */
+/** Un qualifier trie les events d'un même type. */
 @HelidonTest
 @DisableDiscovery
 @AddBean(ReservationService.class)
@@ -30,8 +30,8 @@ class QualifiedEventsTest {
         service.reserve(new Reservation("ada@example.com", 2));
         service.cancel(new Reservation("bob@example.com", 1));
 
-        // L'observateur sans qualificateur a reçu les deux événements. L'ordre entre deux
-        // observateurs d'un même événement n'est pas garanti.
+        // L'observer sans qualifier a reçu les deux events. L'ordre entre deux
+        // observers d'un même event n'est pas garanti.
         assertEquals(List.of("any ada@example.com", "any bob@example.com", "cancelled bob@example.com"),
                 journal.entries().stream().sorted().toList());
     }
