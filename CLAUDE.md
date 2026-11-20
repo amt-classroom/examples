@@ -93,8 +93,8 @@ educational, not production-ready, and leaves out the hardening the concept does
 
 ## Planned exemples
 
-- `4-jdbc-and-jpa` (deck `4-jdbc-and-jpa.tsx`): JDBC (drivers, connections, the pool and its
-  starvation), JPA (the entity, the `EntityManager`), then manipulating and querying data
+- `4-jdbc-and-jpa` (deck `4-jdbc-and-jpa.tsx`): JDBC (drivers, connections, SQL injection and
+  prepared statements, the pool and its starvation), JPA (the entity, the `EntityManager`), then manipulating and querying data
   (default mappings, the owning side, the lifecycle, flushing, JPQL, named queries, Criteria,
   N+1, fetching, the lost update). Its tests run on a real PostgreSQL started by
   Testcontainers, so `./mvnw verify` needs Docker.
