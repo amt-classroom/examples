@@ -14,6 +14,7 @@ Ce dépôt ne contient pas les corrections des laboratoires.
 | [`5-transactions-and-validation`](5-transactions-and-validation/)               | Transactions et validation                 | transactions en JDBC, isolation, verrous, délais, écritures en masse, deux phases ; une application Helidon : `@Transactional`, XA, Jakarta Validation |
 | [`6-database-evolution-and-migration`](6-database-evolution-and-migration/)     | Évolution et migration de bases de données | génération du schéma, Flyway, migrations de données, rollback, expand and contract, jOOQ ; une application Helidon qui migre sa base au démarrage      |
 | [`7-dependency-inversion-and-injection`](7-dependency-inversion-and-injection/) | Inversion et injection de dépendances      | inversion des dépendances, injection, inversion de contrôle ; Jakarta CDI dans Helidon ; doublures de test avec Mockito                                |
+| [`8-presentation-serialization-communication`](8-presentation-serialization-communication/) | Présentation, sérialisation et communication | une application Helidon : DTO, mapper, ressource Jakarta REST, erreurs, idempotence, `If-Match`, contrat OpenAPI ; sérialisation Java et RMI ; XML (parseurs, JAXB, XSD, XJC, une déclaration d'impôt eCH-0119) ; JSON ; Protobuf et gRPC |
 
 ## Compiler et exécuter
 
@@ -25,4 +26,5 @@ Ce dépôt ne contient pas les corrections des laboratoires.
 `4-jdbc-and-jpa`, de `5-transactions-and-validation` et de
 `6-database-evolution-and-migration` démarrent PostgreSQL dans un conteneur : Docker doit
 tourner. `6-database-evolution-and-migration` en a aussi besoin pour compiler, car jOOQ génère
-ses classes depuis une vraie base.
+ses classes depuis une vraie base. `8-presentation-serialization-communication` télécharge
+`protoc`, le compilateur de Protobuf, à sa première compilation.

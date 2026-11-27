@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.ech.ch/xmlns/eCH-0119/4" minorVersion="0">
+    <header>
+        <taxPeriod>2026</taxPeriod>
+        <canton>VD</canton>
+        <source>0</source>
+    </header>
+    <content>
+        <mainForm>
+            <personDataPartner1>
+                <partnerPersonIdentification>
+                    <officialName>Lovelace</officialName>
+                    <firstName>Ada</firstName>
+                    <vn>7560000000002</vn>
+                </partnerPersonIdentification>
+            </personDataPartner1>
+            <revenue>
+                <employedMainRevenue>
+                    <partner1Amount>84000</partner1Amount>
+                </employedMainRevenue>
+            </revenue>
+        </mainForm>
+    </content>
+</message>

@@ -30,6 +30,10 @@
         <!-- Inversion et injection de dépendances (principe d'inversion, injection, inversion
              de contrôle, Jakarta CDI dans Helidon MP, doublures de test avec Mockito). -->
         <module>7-dependency-inversion-and-injection</module>
+        <!-- Présentation, sérialisation et communication (DTO, mapper et ressource Jakarta REST
+             dans Helidon MP, erreurs, idempotence, If-Match et contrat OpenAPI, sérialisation
+             Java, XML avec ses parseurs, JAXB, XSD et XJC, JSON, Protobuf et gRPC). -->
+        <module>8-presentation-serialization-communication</module>
     </modules>
 
     <properties>
@@ -42,6 +46,8 @@
         <jooq.version>3.21.9</jooq.version>
         <!-- Mockito n'est pas dans le BOM de Helidon. -->
         <mockito.version>5.24.0</mockito.version>
+        <!-- protoc, à la version de Protobuf que Helidon embarque. -->
+        <protobuf.version>4.36.0</protobuf.version>
     </properties>
 
     <dependencyManagement>
@@ -192,6 +198,21 @@
                     <groupId>org.flywaydb</groupId>
                     <artifactId>flyway-maven-plugin</artifactId>
                     <version>${flyway.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>jaxb2-maven-plugin</artifactId>
+                    <version>3.2.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>io.smallrye</groupId>
+                    <artifactId>jandex-maven-plugin</artifactId>
+                    <version>3.3.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.xolstice.maven.plugins</groupId>
+                    <artifactId>protobuf-maven-plugin</artifactId>
+                    <version>0.6.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.jooq</groupId>

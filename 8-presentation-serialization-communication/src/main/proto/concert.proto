@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option java_package = "ch.heigvd.amt.protobuf";
+option java_multiple_files = true;
+
+message Concert {
+  int64 id = 1;
+  string artist = 2;
+  string stage = 3;
+  string starts_at = 4;
+}
+
+message ConcertId { int64 id = 1; }
+
+service ConcertCatalog {
+  rpc Find (ConcertId) returns (Concert);
+}

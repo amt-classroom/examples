@@ -149,5 +149,70 @@ educational, not production-ready, and leaves out the hardening the concept does
   `@AddBean` forces `@ApplicationScoped` unless told otherwise, which an interceptor or a
   decorator rejects (`scope = Dependent.class`). `Container.start` boots Weld by hand for what
   `@HelidonTest` cannot show: a startup the container refuses and its shutdown.
+- `8-presentation-serialization-communication` (deck
+  `8-presentation-serialization-communication.tsx`, the former deck 10 redone on Helidon at the
+  user's request on 2026-11-27): the presentation layer (`presentation`: a `Concert` with a fee
+  the `ConcertDto` leaves out, a mapper, a Jakarta REST resource and its status codes, tested
+  through the `WebTarget` of `@HelidonTest`), Java serialization (`serialization`, with
+  `serialization.external` for `Externalizable`), XML (`xml`: JAXB and a resource that produces
+  XML), JSON (`json`: the Jackson `ContextResolver` that writes ISO 8601 dates), Protobuf
+  (`src/main/proto/concert.proto`, sizes of one concert in four formats) and gRPC (`grpc`).
+  Helidon MP 4.5, no database, no Docker; bean discovery is on (`beans.xml`), one application.
+  **Surefire forks one JVM per test class** (`reuseForks=false`): once Helidon has started, its
+  JVM-wide filter rejects every Java deserialization, which `HelidonFilterTest` shows and which
+  would break the plain serialization tests. The byte counts on the slides (106, 76, and 197 /
+  184 / 92 / 55) are pinned by tests and depend on class and package names: renaming one changes
+  them, and the deck with it. The gRPC service uses Helidon's `@Grpc` annotations, not the code
+  `protoc-gen-grpc-java` generates: that plugin ships an x86_64 binary under its `osx-aarch_64`
+  classifier, which fails on an Apple silicon Mac without Rosetta. The gRPC method returns its
+  message directly; an exception it throws reaches the client as `INTERNAL`, whatever its status
+  (answering `NOT_FOUND` takes a `StreamObserver`, which the example leaves out on purpose).
+  The deck's part on HTTP seen from the server was added the same day, because the students
+  learn HTTP in a web course and the deck must not teach it again: `errors` (a business
+  exception mapped to a 409 problem body), `idempotency` (a POST
+  replayed with an `Idempotency-Key`), `conditional` (`ETag`, `If-Match`, 412), `session` (a
+  `@SessionScoped` cart, kept on purpose as a trap: it has no context in Helidon and its
+  resource answers 500) and the OpenAPI document served on `/openapi` (`ContractTest`). The
+  `jandex-maven-plugin` is what lets that document describe the DTO fields. The stage-busy rule
+  lives in `ConcertService.schedule`, so every test that posts a concert must pick a free slot.
+  `xsd` and `xjc` bring back what the former deck's companion repository ran (the user missed
+  XJC on 2026-11-27): `src/main/resources/schema/programme.xsd` describes the same document as
+  the hand-written `xml.Programme`, `xsd.Validation` validates against it, and
+  `jaxb2-maven-plugin` generates `ch.heigvd.amt.xjc.generated`. The validator translates its
+  messages into the JVM's language, so `ValidationTest` sets the default locale to English.
+  `parsers` (DOM, SAX, StAX, also from that repository) reads one programme three ways.
+  `ParsersTest` pins a trap the deck states on its XML limits slide: with default settings the
+  three JDK parsers (checked on Java 25) resolve an external entity and print a local file;
+  `SafeDom` refuses any `DOCTYPE`. Do not harden `Dom`, `Sax` or `Stax`: the trap needs them as
+  they are.
+  `rmi` (added 2026-11-27, when the user asked for a working RMI example on the deck's "Un appel
+  RMI" slide; RMI is not deprecated, JEP 385 only deprecated RMI Activation): a `TicketOffice`
+  remote interface, a `Server` and a `Client` that run in two JVMs and reuse
+  `serialization.Ticket`. `RmiTest` starts `Server` as a separate process from `target/classes`
+  and pins three results: the stub is a dynamic proxy; a call after the server died throws a
+  `RemoteException` (assert the supertype: it is `ConnectException` or `UnmarshalException`
+  depending on whether the client reuses a connection); an exported object nobody holds is
+  garbage collected and the next call throws `NoSuchObjectException`. That last one is why
+  `Server` keeps the office in a static field: do not inline it.
+  `ech` (added 2026-11-27 for the deck's "Une déclaration d'impôt" slide, after the user asked for
+  a slide on eCH and the banking XML standards, where parsers are generated and not hand-written):
+  `src/main/resources/schema/ech/` holds unmodified copies of the eCH-0119 schema (tax return of
+  a natural person) and the twelve eCH schemas it imports, downloaded from ech.ch with the
+  user's agreement; eCH standards may be used and distributed freely if eCH is credited, which
+  the directory's `README.md` does. Do not edit those files. A second `xjc` execution generates
+  162 classes from them into `target/generated-sources/jaxb-ech`, in packages derived from the
+  namespaces (`ch.ech.xmlns.ech_0119._4`); each execution has its own output directory because
+  XJC clears it. eCH schemas import each other by their URL on ech.ch, or by namespace alone:
+  `catalog.xml` maps both to the local copies so the build stays offline (checked with the
+  network blocked). `EchTest` pins the counts on the slide (13 schemas, 162 classes).
+  The deck's OpenAPI slide moved from the HTTP part to the JSON part on 2026-11-27 (the user's
+  choice: it is JSON's schema, as the XSD is XML's); `ContractTest` and its package did not move.
+  **Keep this module small.** On 2026-11-27 the user asked to simplify its examples as far as
+  possible, so that students learn the concepts and are not lost in details. What went: the
+  `StreamObserver` in the gRPC service, schema validation in `ech.Main` (it needed the thirteen
+  schemas loaded in dependency order, because the JDK's catalog support throws a
+  `NullPointerException` on an import without `schemaLocation`), and `errors.ValidationMapper`
+  (it needed a `@Priority` to win over Helidon's own mapper, and the user had removed the notes
+  that showed it). Before adding code to an example, check that a slide shows it.
 
 Add one here, with its deck and sections, before starting it.
