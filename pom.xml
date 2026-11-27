@@ -34,6 +34,9 @@
              dans Helidon MP, erreurs, idempotence, If-Match et contrat OpenAPI, sérialisation
              Java, XML avec ses parseurs, JAXB, XSD et XJC, JSON, Protobuf et gRPC). -->
         <module>8-presentation-serialization-communication</module>
+        <!-- Apache Tika et Apache POI (un rapport PDF et ses tableaux, réécrits en classeur
+             Excel). -->
+        <module>tika-and-poi</module>
     </modules>
 
     <properties>
@@ -48,6 +51,7 @@
         <mockito.version>5.24.0</mockito.version>
         <!-- protoc, à la version de Protobuf que Helidon embarque. -->
         <protobuf.version>4.36.0</protobuf.version>
+        <tika.version>4.2.0</tika.version>
     </properties>
 
     <dependencyManagement>
@@ -148,6 +152,21 @@
                 <artifactId>sqlite-jdbc</artifactId>
                 <version>3.53.4.0</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.tika</groupId>
+                <artifactId>tika-core</artifactId>
+                <version>${tika.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tika</groupId>
+                <artifactId>tika-parser-pdf-module</artifactId>
+                <version>${tika.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>6.0.0</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -193,6 +212,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
                     <version>3.4.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>3.5.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.flywaydb</groupId>

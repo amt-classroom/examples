@@ -214,5 +214,16 @@ educational, not production-ready, and leaves out the hardening the concept does
   `NullPointerException` on an import without `schemaLocation`), and `errors.ValidationMapper`
   (it needed a `@Priority` to win over Helidon's own mapper, and the user had removed the notes
   that showed it). Before adding code to an example, check that a slide shows it.
+- `tika-and-poi` (no deck: the user asked on 2026-11-27 for a standalone Apache Tika and Apache
+  POI example, so the module is named after its libraries and not after a deck file): one
+  package, `tables`. `PdfTables` is a SAX handler that collects the tables Tika 4 emits for
+  `src/main/resources/report.pdf`; `ExcelWorkbook` writes one sheet per table with typed cells;
+  `Main` writes `target/report.xlsx`. Tika only emits `table` elements because the PDF is
+  tagged: it is `report.html` printed by headless Chrome (`--headless --no-pdf-header-footer
+  --print-to-pdf`), so regenerate it that way and not with a tool that writes no tags. Tika
+  splits the first table at the page break and drops empty cells; the handler merges the halves,
+  and the report has no empty cell on purpose (no total row). Tika 4 takes a `TikaInputStream`,
+  not an `InputStream`. `slf4j-simple` and `log4j-to-slf4j` only silence the two libraries'
+  startup warnings.
 
 Add one here, with its deck and sections, before starting it.

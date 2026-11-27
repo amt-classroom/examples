@@ -15,6 +15,7 @@ Ce dépôt ne contient pas les corrections des laboratoires.
 | [`6-database-evolution-and-migration`](6-database-evolution-and-migration/)     | Évolution et migration de bases de données | génération du schéma, Flyway, migrations de données, rollback, expand and contract, jOOQ ; une application Helidon qui migre sa base au démarrage      |
 | [`7-dependency-inversion-and-injection`](7-dependency-inversion-and-injection/) | Inversion et injection de dépendances      | inversion des dépendances, injection, inversion de contrôle ; Jakarta CDI dans Helidon ; doublures de test avec Mockito                                |
 | [`8-presentation-serialization-communication`](8-presentation-serialization-communication/) | Présentation, sérialisation et communication | une application Helidon : DTO, mapper, ressource Jakarta REST, erreurs, idempotence, `If-Match`, contrat OpenAPI ; sérialisation Java et RMI ; XML (parseurs, JAXB, XSD, XJC, une déclaration d'impôt eCH-0119) ; JSON ; Protobuf et gRPC |
+| [`tika-and-poi`](tika-and-poi/) | Apache Tika et Apache POI | un rapport PDF et ses tableaux, lus avec Tika et réécrits en classeur Excel avec POI |
 
 ## Compiler et exécuter
 
